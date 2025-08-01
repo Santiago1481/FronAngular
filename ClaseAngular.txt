@@ -1,0 +1,3 @@
+Que es un componente?
+Bloque de construccione de angular
+Es un bloque de construcción que se puede utilizar para crear interfaces de usuario personalizadas en aplicaciones Angular.
