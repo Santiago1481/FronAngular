@@ -1,0 +1,102 @@
+.jugadores-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 10px;
+}
+
+.jugador {
+  background-color: #54547b;
+  color: white;
+  width: 120px;
+  height: 120px;
+  border-radius: 10px;
+  text-align: center;
+  position: relative;
+  padding: 10px;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.jugador.añadir {
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.mas {
+  font-size: 48px;
+  line-height: 1;
+}
+
+.avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 8px;
+}
+
+.nombre {
+  font-size: 14px;
+}
+
+.eliminar {
+  position: absolute;
+  top: 5px;
+  right: 8px;
+  color: red;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-contenido {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 260px;
+  text-align: center;
+}
+
+.modal-contenido h2 {
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.modal-contenido input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background-color: #ddd;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+.modal-contenido button {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.modal-contenido .cancelar {
+  background-color: #ccc;
+}
