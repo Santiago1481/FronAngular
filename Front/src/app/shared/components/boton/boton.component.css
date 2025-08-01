@@ -1,0 +1,29 @@
+.boton {
+  background-color: #f1c40f;
+  width: 30%;
+  color: white;
+  font-weight: bold;
+  font-size: 24px;
+  padding: 15px 40px;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 
+    0 6px 0 #b38b00,     
+    0 4px 8px rgba(0, 0, 0, 0.3); 
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.4); 
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  text-align: center;
+}
+.boton:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 0 #b38b00, 
+    0 6px 12px rgba(0, 0, 0, 0.4);
+}
+.boton:active {
+  transform: translateY(2px);
+  box-shadow: 
+    0 2px 0 #b38b00, 
+    0 2px 6px rgba(0, 0, 0, 0.3);
+}
