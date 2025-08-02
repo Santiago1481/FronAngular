@@ -13,11 +13,6 @@
     z-index: -1;
 }   
 
-.logo {
-    background-image:url('../../../../public/Logo.png');
-    height: 250px;
-    width: 450px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
+.t-9{
+    margin-top: 9rem;
 }
