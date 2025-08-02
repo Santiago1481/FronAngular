@@ -15,10 +15,11 @@ export class CrearJugadorComponent {
 
   obtenerAvatarAleatorio(): string {
     const imagenes = [
-      '../../../../public/avatares/1.png',
-      '../../../../public/avatares/2.png',
-      '../../../../public/avatares/3.png',
-      '../../../../public/avatares/4.png'
+      'assets/avatares/1.jpg',
+      'assets/avatares/2.jpg',
+      'assets/avatares/3.jpg',
+      'assets/avatares/4.jpg',
+      'assets/avatares/5.jpg'
     ];
     const aleatorio = Math.floor(Math.random() * imagenes.length);
     return imagenes[aleatorio];
