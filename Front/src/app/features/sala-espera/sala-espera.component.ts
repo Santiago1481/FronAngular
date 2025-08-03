@@ -18,6 +18,9 @@ export class SalaEsperaComponent implements OnInit {
   mostrarModal = false;
   formBuilder = inject(FormBuilder);
 
+  condition:boolean = false;
+  countPlayer: number = 0;
+
   formPlayer: FormGroup = this.formBuilder.group({
     name:['', Validators.required]
   })
@@ -29,9 +32,11 @@ export class SalaEsperaComponent implements OnInit {
   loadPlayers(){
     this.playerService.getPlayer().subscribe((data)=>{
       this.players = data;
-      console.log(data)
+      this.countPlayer = data.length;
     })
   }
+
+  
 
   abrirModal() {
     this.mostrarModal = true;
@@ -39,6 +44,7 @@ export class SalaEsperaComponent implements OnInit {
 
   cerrarModal() {
     this.mostrarModal = false;
+    this.formPlayer.reset();
 
   }
 
