@@ -1,0 +1,48 @@
+:host {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background-image: url('../../../../public/Back-ground/FondoInicio.jpg')!important;
+    background-size: cover !important;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    z-index: -1;
+}   
+
+.ranking-container {
+    height: auto;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ranking-table {
+    width: 80%;
+    max-width: 600px;
+    background-color: rgba(255, 255, 255, 0.1); /* fondo blanco desvanecido */
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    color: white;
+    font-size: 1.4rem;
+}
+
+.ranking-table thead {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.ranking-table th, .ranking-table td {
+    padding: 10px 15px;
+    text-align: center;
+}
+
+.ranking-table tbody tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+
+
