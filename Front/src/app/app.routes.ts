@@ -5,7 +5,7 @@ import { CartaComponent } from './shared/components/carta/carta.component';
 import { JuegoComponent } from './features/juego/juego.component';
 
 export const routes: Routes = [
-    { path: '', redirectTo: '/inicio', pathMatch: 'full' },
+    { path: '', redirectTo: 'inicio', pathMatch: 'full' },
     { path: 'inicio', component: InicioComponent },
     { path: 'sala', component: SalaEsperaComponent },
     {path: 'juego',component: JuegoComponent},
