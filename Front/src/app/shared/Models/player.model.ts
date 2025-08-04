@@ -6,3 +6,5 @@ export interface PlayerModel{
     cartas?: CardModel[];
     points: number;
 }
+
+
