@@ -27,8 +27,9 @@
   <app-player *ngFor="let player of players" [player]="player"></app-player>
 </div> -->
 
-<button (click)="StartRound();"></button>
+<!-- <button (click)="StartRound();"></button> -->
 
 <div class="d-flex gap-3 contenedor-cartas">
-  <app-carta *ngFor="let card of deckPlayer?.cards" [card]="card"></app-carta>
+  <app-carta *ngFor="let card of deckPlayer?.cards" [card]="card" (getCard)="addCard($event)"></app-carta>
 </div>
+<button (click)="ver()"></button>
