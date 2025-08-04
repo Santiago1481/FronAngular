@@ -5,7 +5,7 @@ import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/cor
   templateUrl: './tiempo-partida.component.html',
   styleUrls: ['./tiempo-partida.component.css']
 })
-export class TiempoPartidaComponent implements OnInit{
+export class TiempoPartidaComponent implements OnInit,OnChanges{
   segundos: number = 0;
   minutos: number = 0;
   @Input() detener: boolean = false;
@@ -15,11 +15,11 @@ export class TiempoPartidaComponent implements OnInit{
     this.iniciarContador();
   }
 
-  // ngOnChanges(changes: SimpleChanges): void {
-  //   if (changes['detener'] && changes['detener'].currentValue === true) {
-  //     clearInterval(this.intervalo);
-  //   }
-  // }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['detener'] && changes['detener'].currentValue === true) {
+      clearInterval(this.intervalo);
+    }
+  }
 
   iniciarContador(): void {
     this.intervalo = setInterval(() => {

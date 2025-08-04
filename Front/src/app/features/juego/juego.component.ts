@@ -6,10 +6,12 @@ import { CartaComponent } from '../../shared/components/carta/carta.component';
 import { PlayerService } from '../../services/player/player.service';
 import { PlayerModel } from '../../shared/Models/player.model';
 import { PlayerComponent } from "../../shared/components/player/player.component";
+import { TiempoPartidaComponent } from './components/tiempo-partida/tiempo-partida.component';
+import { InfoPartidaComponent } from './components/info-partida/info-partida.component';
 
 @Component({
   selector: 'app-juego',
-  imports: [CommonModule, CartaComponent, PlayerComponent],
+  imports: [CommonModule, CartaComponent, PlayerComponent,TiempoPartidaComponent,InfoPartidaComponent],
   templateUrl: './juego.component.html',
   styleUrl: './juego.component.css',
 })
@@ -40,7 +42,7 @@ export class JuegoComponent implements OnInit {
   loadCard() {
     this.CardService.getCard().subscribe((data) => {
       this.cards = data;
-      console.log(data);
+      // console.log(data);
     });
   }
 }

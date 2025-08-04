@@ -1,7 +1,24 @@
 <!-- <div class="d-flex flex-wrap gap-3">
   <app-carta *ngFor="let card of cards" [card]="card"></app-carta>
 </div> -->
+<div class="row d-flex justify-content-center gap-3">
+  <div class="row d-flex justify-content-center gap-3 pt-5 pb-5">
+    <div class="col d-flex justify-content-center" *ngFor="let player of players">
+      <app-player [player]="player"></app-player>
+    </div>
+    <div class="col-1 d-flex justify-content-center">
+      <!-- <app-tiempo-partida [detener]="true" ></app-tiempo-partida>  -->
+    </div>
+  </div>
+  <div class="row d-flex justify-content-center gap-1 pt-5 pb-5">
+    <app-info-partida [tiempo]=10 mensaje="el usuario ...... esta escogiendo el atributo a competir"></app-info-partida>
+  </div>
+  <div class="row d-flex justify-content-center">
+    <div class="col-10 d-flex justify-content-center">
 
-<div class="d-flex flex-wrap gap-3">
-  <app-player *ngFor="let player of players" [player]="player"></app-player>
-</div> 
+    </div>
+    <div class="col-2 d-flex justify-content-center">
+      
+    </div>
+  </div>
+</div>
