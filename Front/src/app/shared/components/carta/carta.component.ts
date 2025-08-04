@@ -22,6 +22,8 @@ export class CartaComponent{
       this.cardId = data;
       console.log(this.cardId);
     })
-
+    
   }
+
+  
 }

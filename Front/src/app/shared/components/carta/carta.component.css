@@ -2,28 +2,33 @@
   font-family: 'Segoe UI', sans-serif;
   width: 170px;
   cursor: pointer;
+  border: 3px solid #f1c40f; 
 }
 .card:hover {
-  transform: scale(1.05);
   transition: transform 0.2s ease-in-out;
   border: 2px solid #f1c40f; 
+  transform: translateY(-30px);
+  z-index: 10;
 }
+
 .card-img{
   border: 2px solid #f1c40f;
   width: 90%;
+  padding-left: 0%;
+  padding-right: 0%;
 }
 .card-img-top {
   width: 100%;
   height: 140px;
   object-fit: cover;
 }
+
 .card-info{
   background-color: #F9FFCC;
-  border-radius: 12px;
+  border-radius: 8px;
   width: 90%;
 }
 
 .list-group-item {
   font-size: 0.85rem;
-  
 }
