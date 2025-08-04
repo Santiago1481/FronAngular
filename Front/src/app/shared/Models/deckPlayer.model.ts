@@ -1,7 +1,6 @@
 import { CardModel } from "./card.model";
-import { GamePlayerModel } from "./gamePlayer.model";
 
-export interface DeckPlayerModel {
+export interface DeckPlayerModel{
     gamePlayerId: number;
     playerName:   string;
     cards:        CardModel[];
