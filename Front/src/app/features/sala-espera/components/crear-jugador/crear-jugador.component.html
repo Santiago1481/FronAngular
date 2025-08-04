@@ -5,7 +5,7 @@
     <p class="nombre">{{ jugador.nombre.toUpperCase() }}</p>
   </div>
 
-  <div class="jugador añadir" (click)="abrirModal()">
+  <div class="jugador añadir" *ngIf="jugadores.length <= 7" (click)="abrirModal()">
     <div class="mas">+</div>
     <p>AÑADIR</p>
   </div>
