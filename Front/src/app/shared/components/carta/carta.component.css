@@ -1,14 +1,23 @@
 .card {
   font-family: 'Segoe UI', sans-serif;
+  border: 2px solid #f1c40f; 
 }
-
+.card-img{
+  border: 2px solid #f1c40f;
+  width: 90%;
+}
 .card-img-top {
   width: 100%;
   height: 140px;
   object-fit: cover;
-  border-radius: 8px;
+}
+.card-info{
+  background-color: #F9FFCC;
+  border-radius: 12px;
+  width: 90%;
 }
 
 .list-group-item {
   font-size: 0.85rem;
+  
 }
