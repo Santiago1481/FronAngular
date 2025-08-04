@@ -13,12 +13,16 @@
 
         <div class="row d-flex justify-content-center mb-2">
             <div class="col-2 col-md-6 d-flex justify-content-center">
-                <app-crear-jugador></app-crear-jugador>
-            </div>
-            <div class="row d-flex justify-content-center">
-                <h4 class="text-center text-light">
-                    Minimo dos jugadores y Maximo 7
-                </h4>
+                <div class="jugadores-container">
+
+                    <app-crear-jugador *ngFor="let player of players" [player]="player"
+                        (onDeleted)="loadPlayers()"></app-crear-jugador>
+
+                    <div class="jugador añadir" (click)="abrirModal()">
+                        <div class="mas">+</div>
+                        <p>AÑADIR</p>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row d-flex justify-content-center">
@@ -27,7 +31,8 @@
             </h2>
             >
             <div class="col-12 col-md-6 d-flex justify-content-center">
-                <app-boton title="Iniciar" route="/juego"></app-boton>
+
+                <app-boton title="Iniciar" route="/sala" *ngIf="countPlayer >= 2 && countPlayer <= 7" (clicked)="startGame()"></app-boton>
             </div>
         </div>
     </div>
@@ -47,7 +52,7 @@
                 </small>
             </div>
 
-            <button type="submit" class="boton" [disabled]="formPlayer.invalid">Añadir</button>
+            <button type="submit" [disabled]="formPlayer.invalid">Añadir</button>
             <button type="button" class="cancelar" (click)="cerrarModal()">Cancelar</button>
         </form>
     </div>

@@ -25,7 +25,7 @@ import { PlayerService } from '../../../../services/player/player.service';
 export class CrearJugadorComponent implements OnInit {
   playerService = inject(PlayerService);
 
-  @Input() player?: PlayerModel;
+  @Input() player?: PlayerModel;  
   @Output() onDeleted = new EventEmitter<void>();
 
   avatarAleatorio: string = '';

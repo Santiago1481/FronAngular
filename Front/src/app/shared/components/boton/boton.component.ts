@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -11,4 +11,11 @@ import { RouterLink } from '@angular/router';
 export class BotonComponent {
   @Input() title: string = '';
   @Input() route: string = '';
+   @Output() clicked = new EventEmitter<void>();
+
+  onClick() {
+    this.clicked.emit();
+  }
+
+
 }
