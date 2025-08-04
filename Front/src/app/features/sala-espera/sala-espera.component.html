@@ -13,16 +13,7 @@
 
         <div class="row d-flex justify-content-center mb-2">
             <div class="col-2 col-md-6 d-flex justify-content-center">
-                <div class="jugadores-container">
-
-                    <app-crear-jugador *ngFor="let player of players" [player]="player"
-                        (onDeleted)="loadPlayers()"></app-crear-jugador>
-
-                    <div class="jugador añadir" (click)="abrirModal()" *ngIf="countPlayer<7">
-                        <div class="mas">+</div>
-                        <p>AÑADIR</p>
-                    </div>
-                </div>
+                <app-crear-jugador></app-crear-jugador>
             </div>
         </div>
         <div class="row d-flex justify-content-center">
