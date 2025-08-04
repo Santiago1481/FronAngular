@@ -14,7 +14,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-// import { GameService } from '../../services/game/game.service';
+import { GameService } from '../../services/game/game.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -34,7 +34,7 @@ export class SalaEsperaComponent implements OnInit {
   private playerService = inject(PlayerService);
   mostrarModal = false;
   private formBuilder = inject(FormBuilder);
-  // private gameService = inject(GameService);
+  private gameService = inject(GameService);
   private router = inject(Router);
 
   condition: boolean = false;
@@ -65,13 +65,16 @@ export class SalaEsperaComponent implements OnInit {
     this.formPlayer.reset();
   }
 
-  // startGame(){
-  //   this.gameService.CreateGame().subscribe({
-  //     next:()=>{
-  //       this.router.navigate(['juego'])
-  //     }
-  //   })
-  // }
+  startGame() {
+    this.gameService.CreateGame().subscribe({
+      next: () => {
+        this.router.navigate(['juego']);
+      },
+      error: (err) => {
+        console.error('Error al iniciar jugador:', err);
+      },
+    });
+  }
 
   register() {
     if (this.formPlayer.invalid) return;

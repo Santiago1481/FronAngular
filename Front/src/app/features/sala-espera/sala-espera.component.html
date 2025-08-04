@@ -32,7 +32,7 @@
             >
             <div class="col-12 col-md-6 d-flex justify-content-center">
 
-                <app-boton title="Iniciar" route="/sala" *ngIf="countPlayer >= 2 && countPlayer <= 7"></app-boton>
+                <app-boton title="Iniciar" route="/sala" *ngIf="countPlayer >= 2 && countPlayer <= 7" (clicked)="startGame()"></app-boton>
             </div>
         </div>
     </div>
