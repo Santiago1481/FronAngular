@@ -13,7 +13,16 @@
 
         <div class="row d-flex justify-content-center mb-2">
             <div class="col-2 col-md-6 d-flex justify-content-center">
-                <app-crear-jugador></app-crear-jugador>
+                <div class="jugadores-container">
+
+                    <app-crear-jugador *ngFor="let player of players" [player]="player"
+                        (onDeleted)="loadPlayers()"></app-crear-jugador>
+
+                    <div class="jugador añadir" (click)="abrirModal()">
+                        <div class="mas">+</div>
+                        <p>AÑADIR</p>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row d-flex justify-content-center">
@@ -43,7 +52,7 @@
                 </small>
             </div>
 
-            <button type="submit" class="boton" [disabled]="formPlayer.invalid">Añadir</button>
+            <button type="submit" [disabled]="formPlayer.invalid">Añadir</button>
             <button type="button" class="cancelar" (click)="cerrarModal()">Cancelar</button>
         </form>
     </div>
