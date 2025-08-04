@@ -15,5 +15,9 @@ export class CartaService {
   public getCard():Observable<CardModel[]>{
     return this.http.get<CardModel[]>(this.urlBase);
   }
+
+  public getCardById(id: number): Observable<CardModel> {
+    return this.http.get<CardModel>(`${this.urlBase}/${id}`);
+  }
   
 }

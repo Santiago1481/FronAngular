@@ -1,5 +1,11 @@
 .card {
   font-family: 'Segoe UI', sans-serif;
+  width: 170px;
+  cursor: pointer;
+}
+.card:hover {
+  transform: scale(1.05);
+  transition: transform 0.2s ease-in-out;
   border: 2px solid #f1c40f; 
 }
 .card-img{

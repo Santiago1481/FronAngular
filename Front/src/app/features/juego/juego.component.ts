@@ -7,13 +7,19 @@ import { PlayerService } from '../../services/player/player.service';
 import { PlayerModel } from '../../shared/Models/player.model';
 import { DeckPlayerModel } from '../../shared/Models/deck.model';
 import { DeckService } from '../../services/deck/deck.service';
-import { PlayerComponent } from "../../shared/components/player/player.component";
+import { PlayerComponent } from '../../shared/components/player/player.component';
 import { TiempoPartidaComponent } from './components/tiempo-partida/tiempo-partida.component';
 import { InfoPartidaComponent } from './components/info-partida/info-partida.component';
 
 @Component({
   selector: 'app-juego',
-  imports: [CommonModule, CartaComponent, PlayerComponent,TiempoPartidaComponent,InfoPartidaComponent],
+  imports: [
+    CommonModule,
+    CartaComponent,
+    PlayerComponent,
+    TiempoPartidaComponent,
+    InfoPartidaComponent,
+  ],
   templateUrl: './juego.component.html',
   styleUrl: './juego.component.css',
 })
@@ -44,10 +50,13 @@ export class JuegoComponent implements OnInit {
     this.turns++;
     if (this.turns > this.numPlayers - 1) {
       this.turns = 0;
-      this.numberRound++;
     }
 
     console.log(this.numberRound);
+  }
+
+  ResolRound() {
+    this.numberRound++;
   }
 
   iniciarJugadores(players: PlayerModel[]) {
