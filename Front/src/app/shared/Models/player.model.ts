@@ -1,4 +1,4 @@
-import { CardModel } from "./card.model";
+
 
 export interface PlayerModel{
     id: number;
