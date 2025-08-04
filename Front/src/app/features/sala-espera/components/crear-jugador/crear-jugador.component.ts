@@ -1,51 +1,52 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  Validators,
+} from '@angular/forms';
+import { PlayerModel } from '../../../../shared/Models/player.model';
+import { PlayerService } from '../../../../services/player/player.service';
 
 @Component({
   selector: 'app-crear-jugador',
   imports: [FormsModule, CommonModule],
   templateUrl: './crear-jugador.component.html',
-  styleUrl: './crear-jugador.component.css'
+  styleUrl: './crear-jugador.component.css',
 })
-export class CrearJugadorComponent {
-  jugadores: { nombre: string, avatar: string }[] = [];
-  mostrarModal = false;
-  nuevoNombre = '';
+export class CrearJugadorComponent implements OnInit {
+  playerService = inject(PlayerService);
 
-  obtenerAvatarAleatorio(): string {
-    const imagenes = [
-      'assets/avatares/1.jpg',
-      'assets/avatares/2.jpg',
-      'assets/avatares/3.jpg',
-      'assets/avatares/4.jpg',
-      'assets/avatares/5.jpg'
-    ];
-    const aleatorio = Math.floor(Math.random() * imagenes.length);
-    return imagenes[aleatorio];
+  @Input() player?: PlayerModel;
+  @Output() onDeleted = new EventEmitter<void>();
+
+  avatarAleatorio: string = '';
+  imagenes = [
+    '/avatares/1.jpg',
+    '/avatares/2.jpg',
+    '/avatares/3.jpg',
+    '/avatares/4.jpg',
+    '/avatares/5.jpg',
+  ];
+
+  ngOnInit(): void {
+    const i = Math.floor(Math.random() * this.imagenes.length);
+    this.avatarAleatorio = this.imagenes[i];
   }
 
-  agregarJugador() {
-    if (this.nuevoNombre.trim()) {
-      this.jugadores.push({
-        nombre: this.nuevoNombre,
-        avatar: this.obtenerAvatarAleatorio()
-      });
-      this.nuevoNombre = '';
-      this.mostrarModal = false;
-    }
-  }
+  deleteLogic(id: number) {
+    this.playerService.deleteLogic(id).subscribe(() => {
+      console.log('eliminado');
 
-  eliminarJugador(index: number) {
-    this.jugadores.splice(index, 1);
-  }
-
-  abrirModal() {
-    this.mostrarModal = true;
-  }
-
-  cerrarModal() {
-    this.mostrarModal = false;
-    this.nuevoNombre = '';
+      this.onDeleted.emit();
+    });
   }
 }

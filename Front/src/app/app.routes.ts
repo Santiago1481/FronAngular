@@ -6,7 +6,7 @@ import { JuegoComponent } from './features/juego/juego.component';
 import { PodioComponent } from './features/podio/podio.component';
 
 export const routes: Routes = [
-    { path: '', redirectTo: '/inicio', pathMatch: 'full' },
+    { path: '', redirectTo: 'inicio', pathMatch: 'full' },
     { path: 'inicio', component: InicioComponent },
     { path: 'sala', component: SalaEsperaComponent },
     { path: 'juego',component: JuegoComponent},

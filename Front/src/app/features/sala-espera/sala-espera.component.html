@@ -10,7 +10,7 @@
                 </h3>
             </div>
         </div>
-    
+
         <div class="row d-flex justify-content-center mb-2">
             <div class="col-2 col-md-6 d-flex justify-content-center">
                 <app-crear-jugador></app-crear-jugador>
@@ -22,9 +22,33 @@
             </div>
         </div>
         <div class="row d-flex justify-content-center">
+            <h2 class="text-center text-light">
+                Minimo 2 jugadores y Maximo 7 jugadores
+            </h2>
+            >
             <div class="col-12 col-md-6 d-flex justify-content-center">
                 <app-boton title="Iniciar" route="/juego"></app-boton>
             </div>
         </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal" *ngIf="mostrarModal">
+    <div class="modal-contenido">
+        <h2>Añadir Jugador</h2>
+
+        <form [formGroup]="formPlayer" (ngSubmit)="register()">
+            <input type="text" formControlName="name" placeholder="Nombre"
+                [class.error]="formPlayer.get('name')?.invalid && formPlayer.get('name')?.touched" />
+            <div class="error" *ngIf="formPlayer.get('name')?.invalid && formPlayer.get('name')?.touched">
+                <small *ngIf="formPlayer.get('name')?.errors?.['required']">
+                    El nombre es obligatorio.
+                </small>
+            </div>
+
+            <button type="submit" class="boton" [disabled]="formPlayer.invalid">Añadir</button>
+            <button type="button" class="cancelar" (click)="cerrarModal()">Cancelar</button>
+        </form>
     </div>
 </div>

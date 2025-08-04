@@ -1,22 +1,5 @@
-<div class="jugadores-container">
-  <div class="jugador" *ngFor="let jugador of jugadores; let i = index">
-    <div class="eliminar" (click)="eliminarJugador(i)">🗑️</div>
-    <img [src]="jugador.avatar" alt="avatar" class="avatar">
-    <p class="nombre">{{ jugador.nombre.toUpperCase() }}</p>
-  </div>
-
-  <div class="jugador añadir" *ngIf="jugadores.length <= 7" (click)="abrirModal()">
-    <div class="mas">+</div>
-    <p>AÑADIR</p>
-  </div>
-</div>
-
-<!-- Modal -->
-<div class="modal" *ngIf="mostrarModal">
-  <div class="modal-contenido">
-    <h2>Añadir Jugador</h2>
-    <input type="text" placeholder="Nombre" [(ngModel)]="nuevoNombre" />
-    <button (click)="agregarJugador()">Añadir</button>
-    <button class="cancelar" (click)="cerrarModal()">Cancelar</button>
-  </div>
+<div class="jugador">
+  <div class="eliminar" (click)="deleteLogic(player!.id)">🗑️</div>
+  <img [src]="avatarAleatorio" alt="avatar" class="avatar">
+  <p class="nombre">{{player?.name}}</p>
 </div>
