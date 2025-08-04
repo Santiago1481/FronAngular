@@ -1,0 +1,19 @@
+<div class="player-card text-center p-4 rounded">
+    <img
+        [src]="imagenUrl"
+        alt="Jugador"
+        class="player-image mb-3"
+    />
+    <h5 class="player-name mb-3">{{ nombre }}</h5>
+
+    <div class="cards-container mb-3 d-flex justify-content-center gap-1 flex-wrap">
+        <!-- <img
+        *ngFor="let carta of [].constructor(cantidadCartas)"
+        src="assets/img/carta.png"
+        class="card-img"
+        alt="Carta"
+        /> -->
+    </div>
+
+    <h4 class="player-number">{{ cantidadCartas }}</h4>
+</div>

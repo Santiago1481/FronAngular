@@ -1,0 +1,13 @@
+.reloj {
+  font-family: 'Arial Black', sans-serif;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.numero, .separador {
+  padding: 0 10px;
+}
