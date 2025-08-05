@@ -8,5 +8,5 @@ export interface CardModel {
     magic:      number;
     force:      number;
     defense:    number;
-    deckId:     null;
+    isBurned?: boolean;
 }

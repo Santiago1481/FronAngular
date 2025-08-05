@@ -66,6 +66,10 @@ export class SalaEsperaComponent implements OnInit {
   }
 
   startGame() {
+    this.gameService.deletAll().subscribe(()=>{
+      console.log("Borrar decks")
+    })
+
     this.gameService.CreateGame().subscribe({
       next: () => {
         this.router.navigate(['juego']);

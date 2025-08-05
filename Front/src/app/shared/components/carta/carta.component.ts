@@ -15,16 +15,15 @@ export class CartaComponent{
   @Input() card!: CardModel;
   cardServie = inject(CartaService);
 
-  @Output() getCard = new EventEmitter<CardModel>();
+  @Input() gamePlayerId!: number;
+
+  @Output() getCard = new EventEmitter<{ card: CardModel, gamePlayerId: number }>();
   cardId!: CardModel;
   
 
-  getAttributeValue(id:number) {
-    return this.cardServie.getCardById(id).subscribe((data)=>{
-      this.cardId = data;
-      this.getCard.emit(this.cardId);
-      console.log(this.cardId);
-    })
-
-  }
+  getAttributeValue(id: number) {
+  this.cardServie.getCardById(id).subscribe((data) => {
+    this.getCard.emit({ card: data, gamePlayerId: this.gamePlayerId });
+  });
+}
 }

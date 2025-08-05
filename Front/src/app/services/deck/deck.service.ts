@@ -5,15 +5,18 @@ import { Observable } from 'rxjs';
 import { DeckPlayerModel } from '../../shared/Models/deck.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DeckService {
-
   private http = inject(HttpClient);
-  private urlBase = environment.apiUrl + "Deck";
+  private urlBase = environment.apiUrl + 'Deck';
 
-  constructor() { }
-  getDeckPlayer(id:number):Observable<DeckPlayerModel>{
+  constructor() {}
+  getDeckPlayer(id: number): Observable<DeckPlayerModel> {
     return this.http.get<DeckPlayerModel>(`${this.urlBase}/player/${id}`);
+  }
+
+  deleteDeck(playerId:number,cardId:number):Observable<any>{
+    return this.http.delete<any>(`${this.urlBase}/used/${playerId}/${cardId}`)
   }
 }

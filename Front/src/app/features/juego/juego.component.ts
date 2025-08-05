@@ -10,6 +10,8 @@ import { DeckService } from '../../services/deck/deck.service';
 import { PlayerComponent } from '../../shared/components/player/player.component';
 import { TiempoPartidaComponent } from './components/tiempo-partida/tiempo-partida.component';
 import { InfoPartidaComponent } from './components/info-partida/info-partida.component';
+import { Router } from '@angular/router';
+import { GameService } from '../../services/game/game.service';
 
 @Component({
   selector: 'app-juego',
@@ -17,8 +19,8 @@ import { InfoPartidaComponent } from './components/info-partida/info-partida.com
     CommonModule,
     CartaComponent,
     PlayerComponent,
-    TiempoPartidaComponent,
-    InfoPartidaComponent,
+    // TiempoPartidaComponent,
+    // InfoPartidaComponent,
   ],
   templateUrl: './juego.component.html',
   styleUrl: './juego.component.css',
@@ -31,13 +33,10 @@ export class JuegoComponent implements OnInit {
   players: PlayerModel[] = [];
   deckPlayer?: DeckPlayerModel;
   deckService = inject(DeckService);
+  router = inject(Router);
+  gameService = inject(GameService);
 
-  selectedCards: CardModel[] = [];
-
-  addCard(event: CardModel) {
-    this.selectedCards.push(event);
-    this.Turns();
-  }
+  selectedCards: { card: CardModel; playerId: number }[] = [];
 
   ngOnInit(): void {
     // this.loadCard();
@@ -46,26 +45,64 @@ export class JuegoComponent implements OnInit {
   }
 
   // Variables para el juego
-  numberRound: number = 0;
-  ponts: number = 8;
+  // ponts: number = 8;
   numPlayers: number = 0;
   turns: number = 0;
-  atributte :  string = 'speed'; // Atributo por defecto para la comparación
+  atributte: string = '';
+  numberRound: number = 1;
+  maxRounds: number = 3;
+  selectAtributte: boolean = true;
+  PlayRound: boolean = false;
+  FinishRound: boolean = false;
+  winnerCard?: CardModel;
+  points: { [playerId: number]: number } = {};
+  winnerPlayerId?: number;
 
-  ver() {
-    console.log(this.selectedCards);
+  get GameFinish(): boolean {
+    return this.numberRound > this.maxRounds;
   }
+
+  addCard(event: { card: CardModel; gamePlayerId: number }) {
+    const { card, gamePlayerId } = event;
+    const playerId = this.players[this.turns].id;
+
+    this.selectedCards.push({ card, playerId });
+
+    this.deckService.deleteDeck(gamePlayerId, card.id).subscribe();
+
+    this.Turns();
+  }
+  // ver() {
+  //   console.log(this.selectedCards);
+  // }
 
   constructor() {}
   StartRound() {
-    this.Turns();
+    // this.Turns();
     // console.log(this.selectedCards);
     // console.log(this.numberRound);
+    this.atributte = '';
+    this.selectAtributte = true;
+    this.PlayRound = false;
+    this.FinishRound = false;
+    this.winnerCard = undefined;
+    // this.turns = 0;
+    this.turns = (this.turns + 1) % this.players.length; //para pasar el juagdor a la derecha jeje, Magia
+
+    this.selectedCards = [];
+  }
+
+  resertGame() {
+    this.numberRound = 1;
+    this.points = {};
+    this.players.forEach((p) => (this.points[p.id] = 0));
+    this.turns = 0;
+    this.StartRound();
   }
 
   Turns() {
     console.log(this.turns);
-    this.getDeckPlayer(this.players[this.turns].id); // Asumiendo que el primer jugador es el que inicia
+    this.getDeckPlayer(this.players[this.turns].id);
     this.turns++;
 
     if (this.turns > this.numPlayers - 1) {
@@ -76,124 +113,131 @@ export class JuegoComponent implements OnInit {
       this.selectedCards = [];
     }
   }
+  chooseAttribute(attr: string) {
+    this.atributte = attr;
+    this.selectAtributte = false;
+    this.PlayRound = true;
+    this.Turns();
+  }
+  getWinnerPlayerName(): string {
+    const player = this.players.find((p) => p.id === this.winnerPlayerId);
+    return player ? player.name : 'Jugador desconocido';
+  }
 
   calulateCardWinner(atributte: string) {
-    let mayor!: CardModel;
+    if (!atributte) {
+      console.error('Atributo no definido');
+      return;
+    }
+
+    let ganador: { card: CardModel; playerId: number };
+
     switch (atributte) {
       case 'speed':
-        mayor = this.getCardWinnerBySpeed();
+        ganador = this.getCardWinnerBySpeed();
         break;
       case 'force':
-        mayor = this.getCardWinnerByForce();
+        ganador = this.getCardWinnerByForce();
         break;
       case 'defense':
-        mayor = this.getCardWinnerByDefense();
+        ganador = this.getCardWinnerByDefense();
         break;
-        case 'resistance':
-        mayor = this.getCardWinnerByResistance();
+      case 'resistance':
+        ganador = this.getCardWinnerByResistance();
         break;
-        case 'magic':
-        mayor = this.getCardWinnerByMagic();
+      case 'magic':
+        ganador = this.getCardWinnerByMagic();
         break;
-        case 'health':
-        mayor = this.getCardWinnerByHealth();
+      case 'health':
+        ganador = this.getCardWinnerByHealth();
         break;
       default:
         console.log('Atributo no válido');
-        break;
+        return;
     }
-    
-    console.log('La carta ganadora es: ', mayor);
-  }
 
+    this.winnerCard = ganador.card;
+    this.winnerPlayerId = ganador.playerId;
+    this.FinishRound = true;
+    this.PlayRound = false;
 
-  getCardWinnerBySpeed(){
-    let mayor!: CardModel;
-    for (let i = 0; i < this.selectedCards.length; i++) {
-      mayor = this.selectedCards[i];
-      for (let j = 0; j < this.selectedCards.length; j++) {
-        if (this.selectedCards[j].speed > mayor.speed) {
-          mayor = this.selectedCards[j];
-        }
-      }
-    }
-    return mayor;
-  }
+    // Sumar puntos
+    this.points[ganador.playerId]++;
+    const playerWinner = this.players.find((p) => p.id === ganador.playerId);
+    console.log(`La carta ganadora es: `, ganador.card);
+    console.log(`El jugador que ganó la ronda es: ${playerWinner?.name}`);
 
-  getCardWinnerByForce(){
-    let mayor!: CardModel;
-    for (let i = 0; i < this.selectedCards.length; i++) {
-      mayor = this.selectedCards[i];
-      for (let j = 0; j < this.selectedCards.length; j++) {
-        if (this.selectedCards[j].force > mayor.force) {
-          mayor = this.selectedCards[j];
-        }
-      }
-    }
-    return mayor;
-  }
-
-  getCardWinnerByDefense(){
-    let mayor!: CardModel;
-    for (let i = 0; i < this.selectedCards.length; i++) {
-      mayor = this.selectedCards[i];
-      for (let j = 0; j < this.selectedCards.length; j++) {
-        if (this.selectedCards[j].defense > mayor.defense) {
-          mayor = this.selectedCards[j];
-        }
-      }
-    }
-    return mayor;
-  }
-
-  getCardWinnerByResistance(){
-    let mayor!: CardModel;
-    for (let i = 0; i < this.selectedCards.length; i++) {
-      mayor = this.selectedCards[i];
-      for (let j = 0; j < this.selectedCards.length; j++) {
-        if (this.selectedCards[j].resistance > mayor.resistance) {
-          mayor = this.selectedCards[j];
-        }
-      }
-    }
-    return mayor;
-  }
-  getCardWinnerByMagic(){
-    let mayor!: CardModel;
-    for (let i = 0; i < this.selectedCards.length; i++) {
-      mayor = this.selectedCards[i];
-      for (let j = 0; j < this.selectedCards.length; j++) {
-        if (this.selectedCards[j].magic > mayor.magic) {
-          mayor = this.selectedCards[j];
-        }
-      }
-    }
-    return mayor;
-  }
-
-  getCardWinnerByHealth(){
-    let mayor!: CardModel;
-    for (let i = 0; i < this.selectedCards.length; i++) {
-      mayor = this.selectedCards[i];
-      for (let j = 0; j < this.selectedCards.length; j++) {
-        if (this.selectedCards[j].health > mayor.health) {
-          mayor = this.selectedCards[j];
-        }
-      }
-    }
-    return mayor;
-  }
-
-
-
-  ResolRound() {
+    // Avanzar ronda
     this.numberRound++;
   }
 
-  iniciarJugadores(players: PlayerModel[]) {
-    const numJugadores = players.length;
-    const cartasPorJugador = 8;
+  getCardWinnerBySpeed() {
+    let mayor = this.selectedCards[0];
+    for (let i = 1; i < this.selectedCards.length; i++) {
+      if (this.selectedCards[i].card.speed > mayor.card.speed) {
+        mayor = this.selectedCards[i];
+      }
+    }
+    return mayor;
   }
+
+  getCardWinnerByForce() {
+    let mayor = this.selectedCards[0];
+    for (let i = 1; i < this.selectedCards.length; i++) {
+      if (this.selectedCards[i].card.force > mayor.card.force) {
+        mayor = this.selectedCards[i];
+      }
+    }
+    return mayor;
+  }
+
+  getCardWinnerByDefense() {
+    let mayor = this.selectedCards[0];
+    for (let i = 1; i < this.selectedCards.length; i++) {
+      if (this.selectedCards[i].card.defense > mayor.card.defense) {
+        mayor = this.selectedCards[i];
+      }
+    }
+    return mayor;
+  }
+
+  getCardWinnerByResistance() {
+    let mayor = this.selectedCards[0];
+    for (let i = 1; i < this.selectedCards.length; i++) {
+      if (this.selectedCards[i].card.resistance > mayor.card.resistance) {
+        mayor = this.selectedCards[i];
+      }
+    }
+    return mayor;
+  }
+  getCardWinnerByMagic() {
+    let mayor = this.selectedCards[0];
+    for (let i = 1; i < this.selectedCards.length; i++) {
+      if (this.selectedCards[i].card.magic > mayor.card.magic) {
+        mayor = this.selectedCards[i];
+      }
+    }
+    return mayor;
+  }
+
+  getCardWinnerByHealth() {
+    let mayor = this.selectedCards[0];
+    for (let i = 1; i < this.selectedCards.length; i++) {
+      if (this.selectedCards[i].card.health > mayor.card.health) {
+        mayor = this.selectedCards[i];
+      }
+    }
+    return mayor;
+  }
+
+  // ResolRound() {
+  //   this.numberRound++;
+  // }
+
+  // iniciarJugadores(players: PlayerModel[]) {
+  //   const numJugadores = players.length;
+  //   const cartasPorJugador = 8;
+  // }
 
   getDeckPlayer(id: number) {
     this.deckService.getDeckPlayer(id).subscribe((data) => {
@@ -207,7 +251,16 @@ export class JuegoComponent implements OnInit {
       this.players = data;
       // console.log(data);
       this.numPlayers = this.players.length;
+      this.players.forEach((player) => {
+        this.points[player.id] = 0;
+      });
       // console.log(this.numPlayers);
+    });
+  }
+
+  exit() {
+    this.gameService.deletAll().subscribe(() => {
+      this.router.navigate(['inicio']);
     });
   }
 

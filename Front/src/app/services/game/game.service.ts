@@ -15,4 +15,8 @@ export class GameService {
   CreateGame(id:number =1):Observable<any>{
     return this.http.post<any>(`${this.urlBase}/${id}/start`,[])
   }
+
+  deletAll():Observable<any>{
+    return this.http.delete<any>(this.urlBase+"/end")
+  }
 }

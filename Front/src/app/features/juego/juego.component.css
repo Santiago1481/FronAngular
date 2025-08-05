@@ -14,9 +14,148 @@
 
 .contenedor-cartas {
   display: flex;
-    flex-direction: row;
-  max-width: 1000px;
+  flex-direction: row;
+  /* max-width: 1000px;
   overflow-x: auto;
-  flex-wrap: nowrap;
+  flex-wrap: nowrap; */
 }
- 
+
+/* Puntajes */
+.puntajes-container {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  border-radius: 10px;
+  display: inline-block;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.puntajes-container h5 {
+  color: #2c3e50;
+  margin-bottom: 15px;
+}
+
+.puntajes-container ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.puntajes-container li {
+  padding: 5px 0;
+  color: #34495e;
+  font-weight: 500;
+}
+
+/* Turno actual */
+.turno-actual {
+  background: #3498db;
+  color: white;
+  padding: 15px 25px;
+  border-radius: 25px;
+  display: inline-block;
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+}
+
+/* Juego terminado */
+.juego-terminado {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 30px;
+  border-radius: 15px;
+  display: inline-block;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.juego-terminado h4 {
+  color: #27ae60;
+  margin-bottom: 15px;
+}
+
+.juego-terminado p {
+  color: #7f8c8d;
+  margin-bottom: 20px;
+}
+
+/* Ganador de ronda */
+.ganador-ronda {
+  background: #f39c12;
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  display: inline-block;
+  box-shadow: 0 6px 15px rgba(243, 156, 18, 0.3);
+}
+
+.ganador-ronda h4 {
+  margin-bottom: 15px;
+}
+
+/* Selección de atributos */
+.seleccion-atributos {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 25px;
+  border-radius: 15px;
+  display: inline-block;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.seleccion-atributos h5 {
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.btn-atributo {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s;
+}
+
+.btn-atributo:hover {
+  background: #2980b9;
+}
+
+/* Cartas del jugador */
+.cartas-jugador {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  border-radius: 15px;
+  display: inline-block;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.cartas-jugador h5 {
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+/* Botones generales */
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.btn-primary {
+  background: #3498db;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #2980b9;
+}
+
+.btn-secondary {
+  background: #95a5a6;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: #7f8c8d;
+}

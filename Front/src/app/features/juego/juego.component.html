@@ -10,16 +10,27 @@
       <!-- <app-tiempo-partida [detener]="true" ></app-tiempo-partida>  -->
     </div>
   </div>
-  <div class="row d-flex justify-content-center gap-1 pt-5 pb-5">
+  <!-- <div class="row d-flex justify-content-center gap-1 pt-5 pb-5">
     <app-info-partida [tiempo]=10 mensaje="el usuario ...... esta escogiendo el atributo a competir"></app-info-partida>
-  </div>
+  </div> -->
   <div class="row d-flex justify-content-center">
     <div class="col-10 d-flex justify-content-center">
 
     </div>
     <div class="col-2 d-flex justify-content-center">
-      
+
     </div>
+  </div>
+</div>
+
+<div class="mt-3 text-center">
+  <div class="puntajes-container">
+    <h5>Puntajes:</h5>
+    <ul>
+      <li *ngFor="let player of players">
+        {{ player.name }}: {{ points[player.id] }} puntos
+      </li>
+    </ul>
   </div>
 </div>
 
@@ -28,8 +39,56 @@
 </div> -->
 
 <!-- <button (click)="StartRound();"></button> -->
-
-<div class="d-flex gap-3 contenedor-cartas">
-  <app-carta *ngFor="let card of deckPlayer?.cards" [card]="card" (getCard)="addCard($event)"></app-carta>
+<div *ngIf="!FinishRound && PlayRound && !GameFinish" class="text-center mt-3">
+  <div class="turno-actual">
+    <h5>Turno de: <strong>{{ players[turns]!.name }}</strong></h5>
+  </div>
 </div>
-<button (click)="ver()"></button>
+
+<div *ngIf="GameFinish" class="text-center mt-4">
+  <div class="juego-terminado">
+    <h4>🏁 ¡Juego finalizado!</h4>
+    <p>Gracias por jugar.</p>
+    <!-- <button class="btn btn-secondary" (click)="resertGame()">Reiniciar</button>sddfdf -->
+
+    <button class="btn btn-secondary" (click)="exit()">Salir</button>
+
+  </div>
+</div>
+
+<div *ngIf="FinishRound && !GameFinish" class="text-center mt-4">
+  <div class="ganador-ronda">
+    <h4>¡Ganador de la ronda!</h4>
+    <p><strong>{{ getWinnerPlayerName() }}</strong></p>
+    <button class="btn btn-primary mt-3" (click)="StartRound()">Siguiente ronda</button>
+  </div>
+</div>
+
+<div *ngIf="selectAtributte && !GameFinish" class="text-center mt-4">
+  <div class="seleccion-atributos">
+    <h5>Elige un atributo:</h5>
+    <div class="d-flex gap-3 justify-content-center flex-wrap">
+      <button class="btn-atributo" (click)="chooseAttribute('speed')">Velocidad</button>
+      <button class="btn-atributo" (click)="chooseAttribute('force')">Fuerza</button>
+      <button class="btn-atributo" (click)="chooseAttribute('defense')">Defensa</button>
+      <button class="btn-atributo" (click)="chooseAttribute('resistance')">Resistencia</button>
+      <button class="btn-atributo" (click)="chooseAttribute('magic')">Magia</button>
+      <button class="btn-atributo" (click)="chooseAttribute('health')">Salud</button>
+    </div>
+  </div>
+</div>
+
+<div class="text-center mt-4" *ngIf="!selectAtributte && !FinishRound && !GameFinish">
+  <div class="cartas-jugador">
+    <h5>Tus cartas:</h5>
+    <div class="d-flex gap-3 contenedor-cartas justify-content-center">
+      <app-carta
+        *ngFor="let card of deckPlayer?.cards"
+        [card]="card"
+        [gamePlayerId]="deckPlayer!.gamePlayerId"
+        (getCard)="addCard($event)">
+      </app-carta>
+    </div>
+  </div>
+</div>
+<!-- <button (click)="ver()"></button> -->
