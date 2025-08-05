@@ -1,26 +1,41 @@
 <!-- <div class="d-flex flex-wrap gap-3">
   <app-carta *ngFor="let card of cards" [card]="card"></app-carta>
 </div> -->
-<div class="row d-flex justify-content-center gap-3">
-  <div class="row d-flex justify-content-center gap-3 pt-5 pb-5">
-    <div class="col d-flex justify-content-center" *ngFor="let player of players">
+
+<div class="container-fluid">
+  <!-- Jugadores en la parte superior -->
+  <div class="row justify-content-center pt-3 pb-2">
+    <div class="col-auto" *ngFor="let player of players">
       <app-player [player]="player"></app-player>
     </div>
-    <div class="col-1 d-flex justify-content-center">
-      <!-- <app-tiempo-partida [detener]="true" ></app-tiempo-partida>  -->
+  </div>
+  
+  <!-- Mostrar puntuaciones -->
+  <div class="row justify-content-center pb-2">
+    <div class="col-12 text-center">
+      <h6>Puntuaciones - Ronda {{ numberRound }} de {{ maxRounds }}</h6>
+      <div class="d-flex justify-content-center gap-3">
+        <div *ngFor="let scoreData of getScoresArray()" class="badge bg-primary p-2">
+          {{ scoreData.player.name }}: {{ scoreData.score }}
+        </div>
+      </div>
     </div>
   </div>
-  <div class="row d-flex justify-content-center gap-1 pt-5 pb-5">
-    <app-info-partida [tiempo]=10 mensaje="el usuario ...... esta escogiendo el atributo a competir"></app-info-partida>
-  </div>
-  <div class="row d-flex justify-content-center">
-    <div class="col-10 d-flex justify-content-center">
 
-    </div>
-    <div class="col-2 d-flex justify-content-center">
-      
+  <!-- Info de la partida -->
+  <div class="row justify-content-center pb-3">
+    <div class="col-auto">
+      <app-info-partida 
+        [tiempo]="10" 
+        [mensaje]="selectAtributte ? 'El jugador ' + players[turns]?.name + ' está escogiendo el atributo a competir' : 'Esperando jugadas...'">
+      </app-info-partida>
     </div>
   </div>
+</div>
+
+<!-- Mostrar de quién es el turno -->
+<div *ngIf="!FinishRound && isPlayingRound && !gameFinished" class="text-center pb-2">
+  <h6>Turno de: <strong>{{ players[turns]?.name }}</strong></h6>
 </div>
 
 <!-- <div class="d-flex flex-wrap gap-3">
@@ -29,7 +44,77 @@
 
 <!-- <button (click)="StartRound();"></button> -->
 
-<div class="d-flex gap-3 contenedor-cartas">
+<!-- Botones para seleccionar atributo - Solo cuando se debe seleccionar -->
+<div *ngIf="selectAtributte && !gameFinished" class="d-flex gap-2 justify-content-center pb-3">
+  <button class="btn btn-primary btn-sm" (click)="GetAttribute('speed')">Velocidad</button>
+  <button class="btn btn-success btn-sm" (click)="GetAttribute('force')">Fuerza</button>
+  <button class="btn btn-warning btn-sm" (click)="GetAttribute('defense')">Defensa</button>
+  <button class="btn btn-info btn-sm" (click)="GetAttribute('resistance')">Resistencia</button>
+  <button class="btn btn-secondary btn-sm" (click)="GetAttribute('magic')">Magia</button>
+  <button class="btn btn-danger btn-sm" (click)="GetAttribute('health')">Salud</button>
+</div>
+
+<!-- Mostrar cartas del jugador actual - Solo cuando no se está seleccionando atributo -->
+<div *ngIf="!gameFinished && !selectAtributte && isPlayingRound" class="d-flex gap-2 justify-content-center flex-wrap contenedor-cartas px-3">
   <app-carta *ngFor="let card of deckPlayer?.cards" [card]="card" (getCard)="addCard($event)"></app-carta>
 </div>
-<button (click)="ver()"></button>
+
+<!-- Botón de debug -->
+<div class="text-center py-2">
+  <button class="btn btn-outline-dark btn-sm" (click)="ver()">Debug</button>
+</div>
+
+<!-- Mostrar ganador de la ronda -->
+<div *ngIf="FinishRound && !gameFinished" class="text-center py-3">
+  <div class="alert alert-success">
+    <h5>¡Ganador de la ronda {{ numberRound - 1 }}!</h5>
+    <p>
+      <strong>{{ getWinnerPlayerName() }}</strong> ganó con el atributo <strong>{{ atributte }}</strong>
+    </p>
+    <app-carta [card]="winnerCard!"></app-carta>
+    <button 
+      class="btn btn-primary mt-3" 
+      (click)="nextRound()" 
+      [disabled]="numberRound > maxRounds">
+      {{ numberRound <= maxRounds ? 'Siguiente ronda' : 'Ver resultado final' }}
+    </button>
+  </div>
+</div>
+
+<!-- Mostrar ganador final del juego -->
+<div *ngIf="gameFinished" class="container py-4">
+  <div class="text-center">
+    <div class="alert alert-success">
+      <h2>🎉 ¡JUEGO FINALIZADO! 🎉</h2>
+      <h3>Ganador: <strong>{{ finalWinner?.name }}</strong></h3>
+      <p>Con {{ scores[finalWinner?.id || 0] }} ronda(s) ganada(s)</p>
+    </div>
+    
+    <!-- Tabla de resultados finales -->
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <h5>Resultados Finales:</h5>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Posición</th>
+              <th>Jugador</th>
+              <th>Rondas Ganadas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let scoreData of getScoresArray(); let i = index">
+              <td>{{ i + 1 }}°</td>
+              <td>{{ scoreData.player.name }}</td>
+              <td>{{ scoreData.score }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <button class="btn btn-success btn-lg mt-3" (click)="restartGame()">
+      Jugar de nuevo
+    </button>
+  </div>
+</div>
