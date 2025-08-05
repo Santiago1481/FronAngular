@@ -1,3 +1,4 @@
+import { appConfig } from './../../app.config';
 import { Component, inject, OnInit } from '@angular/core';
 import { CartaService } from '../../services/carta/carta.service';
 import { CardModel } from '../../shared/Models/card.model';
@@ -113,13 +114,13 @@ export class JuegoComponent implements OnInit {
       this.selectedCards = [];
     }
   }
-  chooseAttribute(attr: string) {
-    this.atributte = attr;
+  selectedAtributte(appConfigtrubutte: string) {
+    this.atributte = appConfigtrubutte;
     this.selectAtributte = false;
     this.PlayRound = true;
     this.Turns();
   }
-  getWinnerPlayerName(): string {
+  getPLayerWin(): string {
     const player = this.players.find((p) => p.id === this.winnerPlayerId);
     return player ? player.name : 'Jugador desconocido';
   }
@@ -161,13 +162,12 @@ export class JuegoComponent implements OnInit {
     this.FinishRound = true;
     this.PlayRound = false;
 
-    // Sumar puntos
+    //Sumar punticos
     this.points[ganador.playerId]++;
     const playerWinner = this.players.find((p) => p.id === ganador.playerId);
     console.log(`La carta ganadora es: `, ganador.card);
     console.log(`El jugador que ganó la ronda es: ${playerWinner?.name}`);
 
-    // Avanzar ronda
     this.numberRound++;
   }
 

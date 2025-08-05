@@ -59,7 +59,7 @@
 <div *ngIf="FinishRound && !GameFinish" class="text-center mt-4">
   <div class="ganador-ronda">
     <h4>¡Ganador de la ronda!</h4>
-    <p><strong>{{ getWinnerPlayerName() }}</strong></p>
+    <p><strong>{{ getPLayerWin() }}</strong></p>
     <button class="btn btn-primary mt-3" (click)="StartRound()">Siguiente ronda</button>
   </div>
 </div>
@@ -68,12 +68,12 @@
   <div class="seleccion-atributos">
     <h5>Elige un atributo:</h5>
     <div class="d-flex gap-3 justify-content-center flex-wrap">
-      <button class="btn-atributo" (click)="chooseAttribute('speed')">Velocidad</button>
-      <button class="btn-atributo" (click)="chooseAttribute('force')">Fuerza</button>
-      <button class="btn-atributo" (click)="chooseAttribute('defense')">Defensa</button>
-      <button class="btn-atributo" (click)="chooseAttribute('resistance')">Resistencia</button>
-      <button class="btn-atributo" (click)="chooseAttribute('magic')">Magia</button>
-      <button class="btn-atributo" (click)="chooseAttribute('health')">Salud</button>
+      <button class="btn-atributo" (click)="selectedAtributte('speed')">Velocidad</button>
+      <button class="btn-atributo" (click)="selectedAtributte('force')">Fuerza</button>
+      <button class="btn-atributo" (click)="selectedAtributte('defense')">Defensa</button>
+      <button class="btn-atributo" (click)="selectedAtributte('resistance')">Resistencia</button>
+      <button class="btn-atributo" (click)="selectedAtributte('magic')">Magia</button>
+      <button class="btn-atributo" (click)="selectedAtributte('health')">Salud</button>
     </div>
   </div>
 </div>
